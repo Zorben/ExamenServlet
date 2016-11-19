@@ -14,10 +14,16 @@ import es.salesianos.model.Pais;
 
 public class Repository {
 	
+	// DEFINE LA RUTA A LA BASE DE DATOS DESDE EN EL PROYECTO
 	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/examenDB";
+	
 	ConnectionManager manager = new ConnectionH2();
+	
 
-	public Pais searchCountry(Pais paisFormulario) {
+	/* 	PRE: paisFormulario es un string con el nombre de un pais a buscar en la bd
+	 *  POST: si paisFormulario existe en la bd, devuelve ese pais en forma de objeto de la clase PAIS
+	 */ 
+	public Pais buscarPais(String paisFormulario) {
 		Pais paisInDatabase= null;
 		Idioma idiomaInDatabase=null;
 		ResultSet resultSet = null;
@@ -25,14 +31,14 @@ public class Repository {
 		Connection conn = manager.open(jdbcUrl);
 		try {
 			prepareStatement = conn.prepareStatement("SELECT * FROM PAISES WHERE nombrePais = ?");
-			prepareStatement.setString(1, paisFormulario.getName());
+			prepareStatement.setString(1, paisFormulario);
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
 				paisInDatabase = new Pais();
 				idiomaInDatabase = new Idioma();
 				paisInDatabase.setId(resultSet.getInt(0));
 				paisInDatabase.setName(resultSet.getString(1));
-				idiomaInDatabase = searchLanguageById(resultSet.getInt(2));
+				idiomaInDatabase = buscarIdiomaPorId(resultSet.getInt(2));
 				paisInDatabase.setIdioma(idiomaInDatabase);
 			}
 		} catch (SQLException e) {
@@ -46,7 +52,12 @@ public class Repository {
 		manager.close(conn);
 		return paisInDatabase;
 	}
-	public Idioma searchLanguageById(int id) {
+	
+	
+	/* 	PRE: id es la id del idioma a buscar en la bd
+	 *  POST: si existe esa id en la tabla de idiomas de la bd, lo devuelve como objeto de la clase idioma
+	 */ 
+	public Idioma buscarIdiomaPorId(int id) {
 		Idioma idiomaInDatabase=null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
@@ -70,7 +81,12 @@ public class Repository {
 		manager.close(conn);
 		return idiomaInDatabase;
 	}
-	public Idioma searchLanguage(String nombreidioma) {
+	
+	
+	/* 	PRE: nombreidioma es un string con el nombre del idioma a buscar en la bd
+	 *  POST: si existe ese nombre en la tabla de idiomas de la bd, lo devuelve como objeto de la clase Idioma
+	 */
+	public Idioma buscarIdioma(String nombreidioma) {
 		Idioma idiomaInDatabase=null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
@@ -95,7 +111,7 @@ public class Repository {
 		return idiomaInDatabase;
 	}
 	
-
+	// FUNCION QUE CIERRA LA CONSULTA SQL
 	private void close(PreparedStatement prepareStatement) {
 		try {
 			prepareStatement.close();
@@ -104,7 +120,7 @@ public class Repository {
 			throw new RuntimeException(e);
 		}
 	}
-
+	// FUNCION QUE CIERRA EL TABLA QUE RECIBE EL RESULTADO DE LA CONSULTA SQL
 	private void close(ResultSet resultSet) {
 		try {
 			resultSet.close();
@@ -113,8 +129,12 @@ public class Repository {
 			throw new RuntimeException(e);
 		}
 	}
-
-	public void insertPais(Pais paisFormulario) {
+	
+	
+	/* 	PRE: paisFormulario es un objeto de la clase Pais a insertar en la bd
+	 *  POST: se inserta un nuevo registro con los datos de paisFormulario en la tabla PAISES de la bd 
+	 */
+	public void insertarPais(Pais paisFormulario) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
@@ -131,7 +151,12 @@ public class Repository {
 		}
 		manager.close(conn);
 	}
-	public void insertIdioma(String idiomaNombre) {
+	
+	
+	/* 	PRE: idiomaNombre es un string con el nombre de un idioma
+	 *  POST: se inserta un nuevo registro con el nombre idiomaNombre en la tabla Idiomas de la bd 
+	 */
+	public void insertarIdioma(String idiomaNombre) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
@@ -147,9 +172,31 @@ public class Repository {
 		}
 		manager.close(conn);
 	}
+	
+	/* 	PRE: lang es un objeto de la clase Idioma
+	 *  POST: se inserta un nuevo registro con los datos de lang en la tabla Idiomas de la bd 
+	 */
+	public void insertarIdioma(Idioma lang) {
+		Connection conn = manager.open(jdbcUrl);
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = conn.prepareStatement("INSERT INTO IDIOMAS(nombreIdioma)" +
+					"VALUES (?)");
+			preparedStatement.setString(1, lang.getName());
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}finally {
+			close(preparedStatement);
+		}
+		manager.close(conn);
+	}
 
-
-	public List<Idioma> searchAllLanguages() {
+	/*
+	 *  Devuelve una lista de objetos de la clase Idioma de todos los idiomas registrados en la bd
+	 */
+	public List<Idioma> listarIdiomas() {
 		List<Idioma> listIdiomas= new ArrayList<Idioma>();
 		Connection conn = manager.open(jdbcUrl);
 		ResultSet resultSet = null;
@@ -177,7 +224,12 @@ public class Repository {
 		return listIdiomas;
 	}
 	
-	public List<Pais> searchCountriesByLanguage(Idioma language) {
+	
+	/*
+	 * PRE: language es un objeto de la clase Idioma
+	 * POST: Devuelve una lista de objetos de la clase Pais cuyo idioma coincida con language en la bd
+	 */
+	public List<Pais> buscarPaisesPorIdioma(Idioma language) {
 		List<Pais> listPaises= new ArrayList<Pais>();
 		Connection conn = manager.open(jdbcUrl);
 		ResultSet resultSet = null;
@@ -205,6 +257,41 @@ public class Repository {
 		manager.close(conn);
 		return listPaises;
 	}
+	
+	/*
+	 * PRE: language es un string con el nombre de un idioma
+	 * POST: Devuelve una lista de objetos de la clase Pais cuyo idioma coincida con language en la bd
+	 */
+	public List<Pais> buscarPaisesPorIdioma(String language) {
+		List<Pais> listPaises= new ArrayList<Pais>();
+		Connection conn = manager.open(jdbcUrl);
+		ResultSet resultSet = null;
+		PreparedStatement prepareStatement = null;
+		try {
+			prepareStatement = conn.prepareStatement("SELECT * FROM PAISES WHERE idIdioma=?");
+			Idioma idiomaInDatabase = buscarIdioma(language);
+			prepareStatement.setInt(1, idiomaInDatabase.getId());
+			resultSet = prepareStatement.executeQuery();
+			while(resultSet.next()){
+				Pais paisInDatabase = new Pais();
+				paisInDatabase.setId(resultSet.getInt(0));
+				paisInDatabase.setName(resultSet.getString(1));
+				paisInDatabase.setIdioma(idiomaInDatabase);
+				listPaises.add(paisInDatabase);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}finally {
+			close(resultSet);
+			close(prepareStatement);
+		}
+		
+		manager.close(conn);
+		return listPaises;
+	}
+
 
 
 }

@@ -24,28 +24,29 @@ public class WelcomeServlet extends HttpServlet{
 	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		/*
 		Pais pais = new Pais();
 		Idioma idioma = new Idioma();
 		String nombrepais = req.getParameter("countryname");
 		String nombreidioma = req.getParameter("lgname");
 		String nombreidioma2 = req.getParameter("lgname2");
-		List<Idioma> listaIdiomas = repository.searchAllLanguages();
+		List<Idioma> listaIdiomas = repository.listarIdiomas();
 		pais.setName("nombrepais");
 		req.setAttribute("listAllIdiomas", listaIdiomas);
 		
-		if (repository.searchCountry(pais)==null){ // no existe el pais
-			repository.insertPais(pais);
+		if (repository.buscarPais(pais)==null){ // no existe el pais
+			repository.insertarPais(pais);
 		}
 		
 		
-		if (repository.searchLanguage(nombreidioma)!=null){ // existe el idioma
+		if (repository.buscarIdioma(nombreidioma)!=null){ // existe el idioma
 			req.setAttribute("pais", nombrepais);
 			req.setAttribute("idioma", nombreidioma);
 		}
 			
 		else{
-			repository.insertIdioma(nombreidioma2); // inserta el idioma
-		}
+			repository.insertarIdioma(nombreidioma2); // inserta el idioma
+		}*/
 			
 		redirect(req,resp);
 	}
