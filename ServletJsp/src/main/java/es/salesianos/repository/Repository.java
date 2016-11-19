@@ -17,7 +17,7 @@ public class Repository {
 	// DEFINE LA RUTA A LA BASE DE DATOS DESDE EN EL PROYECTO
 	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/examenDB";
 	
-	ConnectionManager manager = new ConnectionH2();
+	static ConnectionManager manager = new ConnectionH2();
 	
 
 	/* 	PRE: paisFormulario es un string con el nombre de un pais a buscar en la bd
@@ -112,7 +112,7 @@ public class Repository {
 	}
 	
 	// FUNCION QUE CIERRA LA CONSULTA SQL
-	private void close(PreparedStatement prepareStatement) {
+	private static void close(PreparedStatement prepareStatement) {
 		try {
 			prepareStatement.close();
 		} catch (SQLException e) {
@@ -121,7 +121,7 @@ public class Repository {
 		}
 	}
 	// FUNCION QUE CIERRA EL TABLA QUE RECIBE EL RESULTADO DE LA CONSULTA SQL
-	private void close(ResultSet resultSet) {
+	private static void close(ResultSet resultSet) {
 		try {
 			resultSet.close();
 		} catch (SQLException e) {
@@ -153,30 +153,10 @@ public class Repository {
 	}
 	
 	
-	/* 	PRE: idiomaNombre es un string con el nombre de un idioma
-	 *  POST: se inserta un nuevo registro con el nombre idiomaNombre en la tabla Idiomas de la bd 
-	 */
-	public void insertarIdioma(String idiomaNombre) {
-		Connection conn = manager.open(jdbcUrl);
-		PreparedStatement preparedStatement = null;
-		try {
-			preparedStatement = conn.prepareStatement("INSERT INTO IDIOMAS(nombreIdioma)" +
-					"VALUES (?)");
-			preparedStatement.setString(1, idiomaNombre);
-			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}finally {
-			close(preparedStatement);
-		}
-		manager.close(conn);
-	}
-	
 	/* 	PRE: lang es un objeto de la clase Idioma
 	 *  POST: se inserta un nuevo registro con los datos de lang en la tabla Idiomas de la bd 
 	 */
-	public void insertarIdioma(Idioma lang) {
+	public static void insertarIdioma(Idioma lang) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
@@ -192,11 +172,31 @@ public class Repository {
 		}
 		manager.close(conn);
 	}
+	
+	/* 	PRE: lang es un string con el nombre de un idioma
+	 *  POST: se inserta un nuevo registro con el nombre lang en la tabla Idiomas de la bd 
+	 */
+	public static void insertarIdioma(String lang) {
+		Connection conn = manager.open(jdbcUrl);
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = conn.prepareStatement("INSERT INTO IDIOMAS(nombreIdioma)" +
+					"VALUES (?)");
+			preparedStatement.setString(1, lang);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}finally {
+			close(preparedStatement);
+		}
+		manager.close(conn);
+	}
 
 	/*
 	 *  Devuelve una lista de objetos de la clase Idioma de todos los idiomas registrados en la bd
 	 */
-	public List<Idioma> listarIdiomas() {
+	public static List<Idioma> listarIdiomas() {
 		List<Idioma> listIdiomas= new ArrayList<Idioma>();
 		Connection conn = manager.open(jdbcUrl);
 		ResultSet resultSet = null;
@@ -290,6 +290,11 @@ public class Repository {
 		
 		manager.close(conn);
 		return listPaises;
+	}
+	
+	public static void main(String [ ] args){
+		insertarIdioma("Japonés");
+		System.out.println(listarIdiomas());
 	}
 
 

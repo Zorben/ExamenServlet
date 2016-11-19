@@ -14,15 +14,26 @@
 		<span>nombre del idioma:</span> 
 		<select name="list">
 		<option value=""></option>
-		<% 
-		Repository repo = new Repository();
-		List<Idioma> listaIdiomas = repo.listarIdiomas();
-		out.println(listaIdiomas);
-		%>
+		
 		</select><br/>
 		<span>inserte idioma:</span> 
 		<input type="text" name="lgname"> <br/>
 		<input type="submit">
 	</form>
+	<% 
+		/* ~~PRUEBAS~~ 
+		Repository repo = new Repository();
+		List<Idioma> listaIdiomas = repo.listarIdiomas();
+		Idioma lang = repo.buscarIdioma("Español");
+		if(lang==null)
+			out.println("idioma null");
+		else
+			out.println("ID: "+ lang.getId()+ "Nombre: "+ lang.getName());
+		if(listaIdiomas.isEmpty())
+			out.println("<a>La lista está vacía</a>");
+		else
+			out.println("<a>La lista está llena</a>"); 
+		*/
+		%>
 	</body>
 </html>
