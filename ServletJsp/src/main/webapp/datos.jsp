@@ -8,32 +8,32 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="" method="post"> <!-- NO servlet, fase 1: lista de idiomas pendiente  -->
-		<span>nombre del pais:</span> 
+	<form action="" method="post">
+		<span><h2>INSERCIÓN DE PAISES</h2></span><hr>
+		<span>Nombre del pais:</span> 
 		<input type="text" name="countryname"> <br/>
-		<span>nombre del idioma:</span> 
+		<span>Nombre del idioma:</span> 
 		<select name="list">
-		<option value=""></option>
+		<option value="" selected></option>
+		
+			<% //LISTA IDIOMAS DE LA BD
+				Repository repo = new Repository();
+				List<Idioma> listaIdiomas = repo.listarIdiomas();
+				if(null != listaIdiomas && !listaIdiomas.isEmpty()){
+					for (Idioma idioma : listaIdiomas) {
+						out.println("<option value="+idioma.getId()+">");
+						out.println(idioma.getName());
+						out.println("</option>");
+					}
+				}
+			%>
 		
 		</select><br/>
-		<span>inserte idioma:</span> 
+		<span>Inserte idioma (Si no lo encuentra en la lista):</span> 
 		<input type="text" name="lgname"> <br/>
 		<input type="submit">
 	</form>
-	<% 
-		/* ~~PRUEBAS~~ 
-		Repository repo = new Repository();
-		List<Idioma> listaIdiomas = repo.listarIdiomas();
-		Idioma lang = repo.buscarIdioma("Español");
-		if(lang==null)
-			out.println("idioma null");
-		else
-			out.println("ID: "+ lang.getId()+ "Nombre: "+ lang.getName());
-		if(listaIdiomas.isEmpty())
-			out.println("<a>La lista está vacía</a>");
-		else
-			out.println("<a>La lista está llena</a>"); 
-		*/
-		%>
+	
+
 	</body>
 </html>
