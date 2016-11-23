@@ -5,15 +5,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Formulario</title>
 </head>
 <body>
-	<form action="" method="post">
+	<form action="insercion" method="post">
 		<span><h2>INSERCIÓN DE PAISES</h2></span><hr>
 		<span>Nombre del pais:</span> 
 		<input type="text" name="countryname"> <br/>
 		<span>Nombre del idioma:</span> 
-		<select name="list">
+		<select name="selectedlanguage">
 		<option value="" selected></option>
 		
 			<% //LISTA IDIOMAS DE LA BD
@@ -30,7 +30,7 @@
 		
 		</select><br/>
 		<span>Inserte idioma (Si no lo encuentra en la lista):</span> 
-		<input type="text" name="lgname"> <br/>
+		<input type="text" name="writtenlanguage"> <br/>
 		<input type="submit">
 	</form>
 	

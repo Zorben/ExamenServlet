@@ -23,7 +23,7 @@ public class Repository {
 	/*	PRE: paisFormulario es un string con el nombre de un pais a buscar en la bd
 	 *  POST: si paisFormulario existe en la bd, devuelve ese pais en forma de objeto de la clase PAIS
 	 */ 
-	public Pais buscarPais(String paisFormulario) {
+	public static Pais buscarPais(String paisFormulario) {
 		Pais paisInDatabase= new Pais();
 		Idioma idiomaInDatabase= new Idioma();
 		ResultSet resultSet = null;
@@ -115,7 +115,7 @@ public class Repository {
 	/*	PRE: paisFormulario es un objeto de la clase Pais a insertar en la bd
 	 *  POST: se inserta un nuevo registro con los datos de paisFormulario en la tabla PAISES de la bd 
 	 */
-	public void insertarPais(Pais paisFormulario) {
+	public static void insertarPais(Pais paisFormulario) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
@@ -310,12 +310,24 @@ public class Repository {
 			}
 		}
 		
+	
+	/* 
+	 *  PRE: 'original' es un String cualquiera
+	 *  POST: devuelve origin sin espacios, con la primera letra en mayusculas y el resto en minusculas
+	 */
+		
+		public String formatString(String original){
+			
+			if (original != null && !original.isEmpty()){
+				return original.trim().substring(0,1).toUpperCase() + original.substring(1).toLowerCase();
+			}
+			else return original;
+		}
 		
 		
 	// FUNCION MAIN PARA PRUEBAS
 	
 	public static void main(String [ ] args){
-		System.out.println(buscarIdiomaPorId(2).getName());
 		
 	}
 
