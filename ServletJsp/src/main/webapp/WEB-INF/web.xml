@@ -20,6 +20,16 @@
         <url-pattern>insercion</url-pattern>
     </servlet-mapping>
     
+     <servlet>
+        <servlet-name>BorradoServlet</servlet-name>
+        <servlet-class>es.salesianos.servlet.BorradoServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BorradoServlet</servlet-name>
+        <url-pattern>borrado</url-pattern>
+    </servlet-mapping>
+    
     <welcome-file-list>
     	<welcome-file>datos.jsp</welcome-file>
 	</welcome-file-list>

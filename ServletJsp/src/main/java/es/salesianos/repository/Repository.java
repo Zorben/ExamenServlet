@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.h2.util.StringUtils;
 
 import es.salesianos.connection.ConnectionH2;
 import es.salesianos.connection.ConnectionManager;
@@ -54,6 +55,8 @@ public class Repository {
 	}
 	
 	
+	
+	
 	/*	PRE: id es la id del idioma a buscar en la bd
 	 *  POST: si existe esa id en la tabla de idiomas de la bd, lo devuelve como objeto de la clase idioma
 	 */ 
@@ -80,6 +83,31 @@ public class Repository {
 		}
 		manager.close(conn);
 		return idiomaInDatabase;
+	}
+	
+	/*	PRE: id es la id del idioma a borrar de la bd
+	 *  POST: si existe esa id en la tabla de idiomas de la bd, lo borra junto a sus paises asociados
+	 */ 
+	public static void borrarIdiomaPorId(int id) {
+		PreparedStatement prepareStatement = null;
+		PreparedStatement prepareStatement2 = null;
+		Connection conn = manager.open(jdbcUrl);
+		try {
+			prepareStatement = conn.prepareStatement("DELETE FROM PAISES WHERE idIdioma = ?");
+			prepareStatement.setInt(1, id);
+			prepareStatement2 = conn.prepareStatement("DELETE FROM IDIOMAS WHERE idIdioma = ?");
+			prepareStatement2.setInt(1, id);
+			prepareStatement.execute();
+			prepareStatement2.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}finally {
+			close(prepareStatement);
+			close(prepareStatement2);
+			
+		}
+		manager.close(conn);
 	}
 	
 	
@@ -210,7 +238,7 @@ public class Repository {
 	 * PRE:	language es un objeto de la clase Idioma
 	 * POST: Devuelve una lista de objetos de la clase Pais cuyo idioma coincida con language en la bd
 	 */
-	public List<Pais> buscarPaisesPorIdioma(Idioma language) {
+	public static List<Pais> buscarPaisesPorIdioma(Idioma language) {
 		List<Pais> listPaises= new ArrayList<Pais>();
 		Connection conn = manager.open(jdbcUrl);
 		ResultSet resultSet = null;
@@ -243,7 +271,7 @@ public class Repository {
 	 *	PRE: language es un string con el nombre de un idioma
 	 *	POST: Devuelve una lista de objetos de la clase Pais cuyo idioma coincida con language en la bd
 	 */
-	public List<Pais> buscarPaisesPorIdioma(String language) {
+	public static List<Pais> buscarPaisesPorIdioma(String language) {
 		List<Pais> listPaises= new ArrayList<Pais>();
 		Connection conn = manager.open(jdbcUrl);
 		ResultSet resultSet = null;
@@ -273,23 +301,6 @@ public class Repository {
 		return listPaises;
 	}
 	
-	/*	
-	 *  Limpia la tabla de idiomas de la bd
-	 */
-	public static void limpiarIdiomas() {
-		Connection conn = manager.open(jdbcUrl);
-		PreparedStatement preparedStatement = null;
-		try {
-			preparedStatement = conn.prepareStatement("DROP TABLE IDIOMAS");
-			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}finally {
-			close(preparedStatement);
-		}
-		manager.close(conn);
-	}
 	
 	// FUNCION QUE CIERRA LA CONSULTA SQL
 		private static void close(PreparedStatement prepareStatement) {
@@ -325,12 +336,23 @@ public class Repository {
 		}
 		
 		
-	// FUNCION MAIN PARA PRUEBAS
-	
-	public static void main(String [ ] args){
+	/* 
+	 *  PRE: 'lista' es una lista de objetos de la clase Pais
+	 *  POST: devuelve un string concatenando el nombre de los paises separandolos por una coma.
+	 */
 		
-	}
-
-
+		public static String listaPaisesAString(List<Pais> lista){
+			String cadena="";
+			if (lista != null || !lista.isEmpty()){
+				for (Pais pais : lista) {
+					cadena += pais.getName()+", ";
+				}
+				/* quita la coma y espacio final, o se percibe el mensaje de que no hay pais asignado*/
+				cadena += ".";
+				cadena = cadena.replace(", .", ""); 
+			}
+			return cadena;
+			
+		}
 
 }
