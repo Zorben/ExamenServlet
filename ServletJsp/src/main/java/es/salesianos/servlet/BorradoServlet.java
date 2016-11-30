@@ -16,17 +16,17 @@ import es.salesianos.connection.ConnectionH2;
 import es.salesianos.connection.ConnectionManager;
 import es.salesianos.model.Pais;
 import es.salesianos.model.Idioma;
-import es.salesianos.repository.Repository;
+import es.salesianos.service.Service;
 
 
 public class BorradoServlet extends HttpServlet{
 	
 	
-	Repository repository = new Repository();
+	Service service = new Service();
 	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		repository.borrarIdiomaPorId(Integer.parseInt(req.getParameter("idborrar")));
+		Service.deleteLangById(Integer.parseInt(req.getParameter("idborrar")));
 		redirect("/datos.jsp", req, resp);
 		
 		
