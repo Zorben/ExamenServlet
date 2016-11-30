@@ -13,8 +13,8 @@
 <body>
 
 <% 
- List<Idioma> idiomas = (List<Idioma>)request.getAttribute("listAllLangs");
- pageContext.setAttribute("idiomas", idiomas);
+ List<Language> languages = (List<Language>)request.getAttribute("listAllLangs");
+ pageContext.setAttribute("languages", languages);
 %>
 
 
@@ -30,19 +30,19 @@
 <tbody>
 <%
 
-if(null != idiomas && !idiomas.isEmpty()){
+if(null != languages && !languages.isEmpty()){
 	Service service = new Service();
 	Snipplet utilidades = new Snipplet();
-	for (Idioma idioma1 : idiomas) {
+	for (Language lang1 : languages) {
 		out.println("<tr>");
 		out.println("<td style='text-align:center'>");
-		out.println("<a href='aviso.jsp?id="+idioma1.getId()+"'>x</a>");
+		out.println("<a href='warning.jsp?id="+lang1.getId()+"'>x</a>");
 		out.println("</td>");
 		out.println("<td>");
-		out.println(idioma1.getName());
+		out.println(lang1.getName());
 		out.println("</td>");
 		out.println("<td>");
-		out.println(utilidades.listaPaisesAString(service.searchCountriesByLang(idioma1)));
+		out.println(utilidades.listaPaisesAString(service.searchCountriesByLang(lang1)));
 		out.println("</td>");
 		out.println("</tr>");
 	}	

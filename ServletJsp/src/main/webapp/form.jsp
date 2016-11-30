@@ -18,11 +18,11 @@
 		
 			<% //LISTA IDIOMAS DE LA BD
 				Service servicio = new Service();
-				List<Idioma> listaIdiomas = servicio.listAllLangs();
-				if(null != listaIdiomas && !listaIdiomas.isEmpty()){
-					for (Idioma idioma : listaIdiomas) {
-						out.println("<option value="+idioma.getId()+">");
-						out.println(idioma.getName());
+				List<Language> listLangs = servicio.listAllLangs();
+				if(null != listLangs && !listLangs.isEmpty()){
+					for (Language lang : listLangs) {
+						out.println("<option value="+lang.getId()+">");
+						out.println(lang.getName());
 						out.println("</option>");
 					}
 				}

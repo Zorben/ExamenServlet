@@ -14,20 +14,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import es.salesianos.connection.ConnectionH2;
 import es.salesianos.connection.ConnectionManager;
-import es.salesianos.model.Pais;
-import es.salesianos.model.Idioma;
+import es.salesianos.model.Country;
+import es.salesianos.model.Language;
 import es.salesianos.service.Service;
 
 
-public class BorradoServlet extends HttpServlet{
+public class DeleteServlet extends HttpServlet{
 	
 	
 	Service service = new Service();
 	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Service.deleteLangById(Integer.parseInt(req.getParameter("idborrar")));
-		redirect("/datos.jsp", req, resp);
+		Service.deleteLangById(Integer.parseInt(req.getParameter("idtodelete")));
+		redirect("/form.jsp", req, resp);
 		
 		
 	}

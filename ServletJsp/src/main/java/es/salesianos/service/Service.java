@@ -23,43 +23,43 @@ public class Service {
 		this.repository = repository;
 	}
 	
-	public static Pais searchCountry(String countryForm) {
-		return repository.buscarPais(countryForm);
+	public static Country searchCountry(String countryForm) {
+		return repository.searchCountry(countryForm);
 	}
 	
-	public static Idioma searchLangById(int id) {
-		return repository.buscarIdiomaPorId(id);
+	public static Language searchLangById(int id) {
+		return repository.searchLanguageById(id);
 	}
 	
 	public static void deleteLangById(int id) {
-		repository.borrarIdiomaPorId(id);
+		repository.deleteLangById(id);
 	}
 	
-	public static Idioma searchLangByString(String LangName) {
-		return repository.buscarIdioma(LangName);
+	public static Language searchLangByString(String LangName) {
+		return repository.searchLanguage(LangName);
 	}
 	
-	public static void insertCountry(Pais countryForm) {
-		repository.insertarPais(countryForm);
+	public static void insertCountry(Country countryForm) {
+		repository.insertCountry(countryForm);
 	}
-	public static void insertLang(Idioma langForm) {
-		repository.insertarIdioma(langForm);
+	public static void insertLang(Language langForm) {
+		repository.insertLang(langForm);
 	}
 	
 	
 	public static void insertLangByString(String langName) {
-		repository.insertarIdioma(langName);
+		repository.insertLangByString(langName);
 	}
 
-	public static List<Idioma> listAllLangs() {
-		return repository.listarIdiomas();
+	public static List<Language> listAllLangs() {
+		return repository.listLangs();
 	}
 	
-	public static List<Pais> searchCountriesByLang(Idioma language) {
-		return repository.buscarPaisesPorIdioma(language);
+	public static List<Country> searchCountriesByLang(Language language) {
+		return repository.searchCountriesByLang(language);
 	}
 	
-	public static List<Pais> searchCountriesByLangName(String language) {
+	public static List<Country> searchCountriesByLangName(String language) {
 		return repository.buscarPaisesPorIdioma(language);
 	}
 }

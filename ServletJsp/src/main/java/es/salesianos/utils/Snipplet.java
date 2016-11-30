@@ -2,13 +2,13 @@ package es.salesianos.utils;
 
 import java.util.List;
 
-import es.salesianos.model.Pais;
+import es.salesianos.model.Country;
 
 public class Snipplet {
 	
 		/* 
 		 *  PRE: 'original' es un String cualquiera
-		 *  POST: devuelve origin sin espacios, con la primera letra en mayusculas y el resto en minusculas
+		 *  POST: devuelve original sin espacios, con la primera letra en mayusculas y el resto en minusculas
 		 */
 			
 			public String formatString(String original){
@@ -21,17 +21,17 @@ public class Snipplet {
 			
 			
 		/* 
-		 *  PRE: 'lista' es una lista de objetos de la clase Pais
+		 *  PRE: 'list' es una lista de objetos de la clase Pais
 		 *  POST: devuelve un string concatenando el nombre de los paises separandolos por una coma.
 		 */
 			
-			public static String listaPaisesAString(List<Pais> lista){
+			public static String listaPaisesAString(List<Country> list){
 				String cadena="";
-				if (lista != null || !lista.isEmpty()){
-					for (Pais pais : lista) {
-						cadena += pais.getName()+", ";
+				if (list != null || !list.isEmpty()){
+					for (Country country : list) {
+						cadena += country.getName()+", ";
 					}
-					/* quita la coma y espacio final, o se percibe el mensaje de que no hay pais asignado*/
+					/* quita la coma y espacio final */
 					cadena += ".";
 					cadena = cadena.replace(", .", ""); 
 				}

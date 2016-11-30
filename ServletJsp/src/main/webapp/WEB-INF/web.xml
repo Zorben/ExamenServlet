@@ -11,27 +11,27 @@
     </description>
 
     <servlet>
-        <servlet-name>InsercionServlet</servlet-name>
+        <servlet-name>InsertServlet</servlet-name>
         <servlet-class>es.salesianos.servlet.InsercionServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>InsercionServlet</servlet-name>
+        <servlet-name>InsertServlet</servlet-name>
         <url-pattern>insercion</url-pattern>
     </servlet-mapping>
     
      <servlet>
-        <servlet-name>BorradoServlet</servlet-name>
+        <servlet-name>DeleteServlet</servlet-name>
         <servlet-class>es.salesianos.servlet.BorradoServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>BorradoServlet</servlet-name>
+        <servlet-name>DeleteServlet</servlet-name>
         <url-pattern>borrado</url-pattern>
     </servlet-mapping>
     
     <welcome-file-list>
-    	<welcome-file>datos.jsp</welcome-file>
+    	<welcome-file>form.jsp</welcome-file>
 	</welcome-file-list>
 
 </web-app>     
