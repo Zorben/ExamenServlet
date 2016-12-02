@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+
 </head>
 <body>
 
@@ -33,16 +33,16 @@
 if(null != languages && !languages.isEmpty()){
 	Service service = new Service();
 	Snipplet utilidades = new Snipplet();
-	for (Language lang1 : languages) {
+	for (Language lang : languages) {
 		out.println("<tr>");
 		out.println("<td style='text-align:center'>");
-		out.println("<a href='warning.jsp?id="+lang1.getId()+"'>x</a>");
+		out.println("<a href='warning.jsp?id="+lang.getId()+"'>x</a>");
 		out.println("</td>");
 		out.println("<td>");
-		out.println(lang1.getName());
+		out.println(lang.getName());
 		out.println("</td>");
 		out.println("<td>");
-		out.println(utilidades.listaPaisesAString(service.searchCountriesByLang(lang1)));
+		out.println(utilidades.listaPaisesAString(service.searchCountriesByLang(lang)));
 		out.println("</td>");
 		out.println("</tr>");
 	}	

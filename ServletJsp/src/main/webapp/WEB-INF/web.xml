@@ -12,7 +12,7 @@
 
     <servlet>
         <servlet-name>InsertServlet</servlet-name>
-        <servlet-class>es.salesianos.servlet.InsercionServlet</servlet-class>
+        <servlet-class>es.salesianos.servlet.InsertServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -22,7 +22,7 @@
     
      <servlet>
         <servlet-name>DeleteServlet</servlet-name>
-        <servlet-class>es.salesianos.servlet.BorradoServlet</servlet-class>
+        <servlet-class>es.salesianos.servlet.DeleteServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
