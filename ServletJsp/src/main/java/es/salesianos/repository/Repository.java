@@ -38,7 +38,7 @@ public class Repository {
 				countryInDatabase = new Country();
 				langInDatabase = new Language();
 				countryInDatabase.setId(resultSet.getInt(1));
-				countryInDatabase.setName(resultSet.getString(2));
+				countryInDatabase.setcountryName(resultSet.getString(2));
 				langInDatabase = searchLanguageById(resultSet.getInt(3));
 				countryInDatabase.setLanguage(langInDatabase);
 			}
@@ -71,7 +71,7 @@ public class Repository {
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
 				langInDatabase.setId(resultSet.getInt(1));
-				langInDatabase.setName(resultSet.getString(2));
+				langInDatabase.setlanguageName(resultSet.getString(2));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -125,7 +125,7 @@ public class Repository {
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
 				langInDatabase.setId(resultSet.getInt(1));
-				langInDatabase.setName(resultSet.getString(2));
+				langInDatabase.setlanguageName(resultSet.getString(2));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -149,7 +149,7 @@ public class Repository {
 		try {
 			preparedStatement = conn.prepareStatement("INSERT INTO PAISES(nombrePais,idIdioma)" +
 					"VALUES (?, ?)");
-			preparedStatement.setString(1, countryForm.getName());
+			preparedStatement.setString(1, countryForm.getcountryName());
 			preparedStatement.setInt(2, countryForm.getLanguage().getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -171,7 +171,7 @@ public class Repository {
 		try {
 			preparedStatement = conn.prepareStatement("INSERT INTO IDIOMAS(nombreIdioma)" +
 					"VALUES (?)");
-			preparedStatement.setString(1, lang.getName());
+			preparedStatement.setString(1, lang.getlanguageName());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -216,7 +216,7 @@ public class Repository {
 			while(resultSet.next()){
 				Language IdiomaInDatabase = new Language();
 				IdiomaInDatabase.setId(resultSet.getInt(1));
-				IdiomaInDatabase.setName(resultSet.getString(2));
+				IdiomaInDatabase.setlanguageName(resultSet.getString(2));
 				listOfLangs.add(IdiomaInDatabase);
 			}
 			
@@ -250,7 +250,7 @@ public class Repository {
 			while(resultSet.next()){
 				Country countryInDatabase = new Country();
 				countryInDatabase.setId(resultSet.getInt(1));
-				countryInDatabase.setName(resultSet.getString(2));
+				countryInDatabase.setcountryName(resultSet.getString(2));
 				countryInDatabase.setLanguage(language);
 				listOfCountries.add(countryInDatabase);
 			}
@@ -284,7 +284,7 @@ public class Repository {
 			while(resultSet.next()){
 				Country countryInDatabase = new Country();
 				countryInDatabase.setId(resultSet.getInt(1));
-				countryInDatabase.setName(resultSet.getString(2));
+				countryInDatabase.setcountryName(resultSet.getString(2));
 				countryInDatabase.setLanguage(langInDatabase);
 				listOfCountries.add(countryInDatabase);
 			}

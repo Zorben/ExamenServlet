@@ -26,7 +26,7 @@ public class DeleteServlet extends HttpServlet{
 	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Service.deleteLangById(Integer.parseInt(req.getParameter("idtodelete")));
+		Service.deleteLangById(Integer.parseInt(req.getParameter("id2delete")));
 		redirect("/form.jsp", req, resp);
 		
 		

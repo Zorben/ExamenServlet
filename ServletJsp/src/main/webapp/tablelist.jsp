@@ -32,17 +32,17 @@
 
 if(null != languages && !languages.isEmpty()){
 	Service service = new Service();
-	Snipplet utilidades = new Snipplet();
+	Utilities utilidades = new Utilities();
 	for (Language lang : languages) {
 		out.println("<tr>");
 		out.println("<td style='text-align:center'>");
 		out.println("<a href='warning.jsp?id="+lang.getId()+"'>x</a>");
 		out.println("</td>");
 		out.println("<td>");
-		out.println(lang.getName());
+		out.println(lang.getlanguageName());
 		out.println("</td>");
 		out.println("<td>");
-		out.println(utilidades.listaPaisesAString(service.searchCountriesByLang(lang)));
+		out.println(utilidades.listCountriesToString(service.searchCountriesByLang(lang)));
 		out.println("</td>");
 		out.println("</tr>");
 	}	

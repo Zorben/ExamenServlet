@@ -24,7 +24,7 @@ public class InsertServlet extends HttpServlet{
 	
 	
 	private Service service = new Service();
-	private Snipplet utilidades = new Snipplet();
+	private Utilities utilidades = new Utilities();
 	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,19 +35,14 @@ public class InsertServlet extends HttpServlet{
 		String name_language_selected = req.getParameter("selectedlanguage");
 		String name_language_written = utilidades.formatString(req.getParameter("writtenlanguage"));
 		
-		//CASUISTICA DE ERRORES DE CAMPOS VACIOS
-		if(name_country=="" && name_language_selected=="" && name_language_written=="")
-			errorRedirection("No ha introducido ningún país ni idioma.", req, resp);
-		else if(name_country=="" && (name_language_selected!="" || name_language_written!=""))
-			errorRedirection("No ha introducido ningún país.", req, resp);
-		else if(name_country!="" && name_language_selected=="" && name_language_written=="")
-			errorRedirection("No ha introducido ningún idioma.", req, resp);
 		
+		// Comprueba si los campos están correctamente rellenados y redirecciona si no es el caso
+		check_errors(name_country,name_language_selected,name_language_written, req, resp);
 		
-		else{ /* Busqueda de campos proporcionados */
+		// Busqueda de campos proporcionados
 			
 			countryForm = service.searchCountry(name_country);
-			if(countryForm.getName() != null) // existe en la bd
+			if(countryForm.getcountryName() != null) // existe en la bd
 				errorRedirection("El pais introducido ya existe, introduzca otro", req, resp);
 			
 			else{ // no existe en la db y se puede insertar
@@ -58,7 +53,7 @@ public class InsertServlet extends HttpServlet{
 				
 				else{ // desplegable vacio, se busca idioma desde el campo manual
 					languageForm = service.searchLangByString(name_language_written);
-					if(languageForm.getName()!=null){
+					if(languageForm.getlanguageName()!=null){
 						errorRedirection("El idioma introducido ya existe, por favor utilice el desplegable.", req, resp);
 					}
 					else{
@@ -69,16 +64,15 @@ public class InsertServlet extends HttpServlet{
 				}
 				// PAIS E IDIOMA CORRECTOS
 				countryForm = new Country();
-				countryForm.setName(name_country);
+				countryForm.setcountryName(name_country);
 				countryForm.setLanguage(languageForm);
 				service.insertCountry(countryForm);
 				req.setAttribute("listAllLangs", service.listAllLangs());
 				redirect("/tablelist.jsp", req, resp);
 			}
 			
-		}
-		
 	}
+		
 
 	protected void redirect(String destino, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(destino);
@@ -103,7 +97,18 @@ public class InsertServlet extends HttpServlet{
 		this.service = service;
 	}
 	
-	
+	// METODO QUE REDIRECCIONA EN LOS CASOS DE ERRORES DE CAMPOS VACIOS EN EL FORMULARIO
+	public void check_errors(String a, String b, String c, HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		if(a=="" && b=="" && c==""){
+			errorRedirection("No ha introducido ningún país ni idioma.", req, resp);
+			}
+		else if(a=="" && (b!="" || c!="")){
+			errorRedirection("No ha introducido ningún país.", req, resp);
+		}
+		else if(a!="" && b=="" && c==""){
+			errorRedirection("No ha introducido ningún idioma.", req, resp);
+		}
+	}
 	
 	
 	

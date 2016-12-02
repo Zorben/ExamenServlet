@@ -4,7 +4,7 @@ import java.util.List;
 
 import es.salesianos.model.Country;
 
-public class Snipplet {
+public class Utilities {
 	
 		/* 
 		 *  PRE: 'original' es un String cualquiera
@@ -25,11 +25,11 @@ public class Snipplet {
 		 *  POST: devuelve un string concatenando el nombre de los paises separandolos por una coma.
 		 */
 			
-			public static String listaPaisesAString(List<Country> list){
+			public static String listCountriesToString(List<Country> list){
 				String cadena="";
 				if (list != null || !list.isEmpty()){
 					for (Country country : list) {
-						cadena += country.getName()+", ";
+						cadena += country.getcountryName()+", ";
 					}
 					/* quita la coma y espacio final */
 					cadena += ".";

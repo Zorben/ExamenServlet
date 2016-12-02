@@ -12,11 +12,11 @@
 </head>
 <body>
     
-	<form action="borrado" method="post">
+	<form action="delete" method="post">
 	<p><h2> ¿SEGURO QUE QUIERE BORRAR EL IDIOMA? TAMBIÉN SE BORRARÁN SUS PAÍSES ASOCIADOS</h2></p>
 	
-	<input type="hidden" value="${param.id}" name="idtodelete">
-	<input type="submit" Value="Sí, quiero borrarlo">&nbsp&nbsp&nbsp&nbsp&nbsp<input type="button" Value="Cancelar" onclick="window.location.href='/ServletJsp'">
+	<input type="hidden" value="${param.id}" name="id2delete">
+	<input type="submit" Value="Sí, quiero borrarlo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" Value="Cancelar" onclick="window.location.href='/ServletJsp'">
 	</form>
 
 

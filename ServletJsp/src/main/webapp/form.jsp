@@ -8,7 +8,7 @@
 <title>Formulario</title>
 </head>
 <body>
-	<form action="insercion" method="post">
+	<form action="insert" method="post">
 		<span><h2>INSERCIÓN DE PAISES</h2></span><hr>
 		<span>Nombre del pais:</span> 
 		<input type="text" name="countryname"> <br/>
@@ -22,7 +22,7 @@
 				if(null != listLangs && !listLangs.isEmpty()){
 					for (Language lang : listLangs) {
 						out.println("<option value="+lang.getId()+">");
-						out.println(lang.getName());
+						out.println(lang.getlanguageName());
 						out.println("</option>");
 					}
 				}
