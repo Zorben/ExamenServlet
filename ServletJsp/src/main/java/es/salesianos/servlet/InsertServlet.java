@@ -94,7 +94,7 @@ public class InsertServlet extends HttpServlet{
 			languageForm = service.searchLangByString(name_language_written);
 			
 			// Si no existe, hay que insertarlo y reasignarlo
-			if(languageForm.getlanguageName()==null){
+			if(languageForm.getLanguageName()==null){
 				service.insertLangByString(name_language_written);
 				languageForm=service.searchLangByString(name_language_written);
 			}

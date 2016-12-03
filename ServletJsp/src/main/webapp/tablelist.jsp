@@ -32,14 +32,14 @@
 
 if(null != languages && !languages.isEmpty()){
 	Service service = new Service();
-	Utilities utilidades = new Utilities();
+	Utilities utilidades;
 	for (Language lang : languages) {
 		out.println("<tr>");
 		out.println("<td style='text-align:center'>");
 		out.println("<a href='warning.jsp?id="+lang.getId()+"'>x</a>");
 		out.println("</td>");
 		out.println("<td>");
-		out.println(lang.getlanguageName());
+		out.println(lang.getLanguageName());
 		out.println("</td>");
 		out.println("<td>");
 		out.println(utilidades.listCountriesToString(service.searchCountriesByLang(lang)));

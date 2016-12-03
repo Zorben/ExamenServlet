@@ -12,11 +12,11 @@ public class Language {
 	public void setId(int id){
 		this.idLanguage=id;
 	}
-	public String getlanguageName() {
+	public String getLanguageName() {
 		return languageName;
 	}
 
-	public void setlanguageName(String name) {
+	public void setLanguageName(String name) {
 		this.languageName = name;
 	}
 

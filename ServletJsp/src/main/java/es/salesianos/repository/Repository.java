@@ -71,7 +71,7 @@ public class Repository {
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
 				langInDatabase.setId(resultSet.getInt(1));
-				langInDatabase.setlanguageName(resultSet.getString(2));
+				langInDatabase.setLanguageName(resultSet.getString(2));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -125,7 +125,7 @@ public class Repository {
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
 				langInDatabase.setId(resultSet.getInt(1));
-				langInDatabase.setlanguageName(resultSet.getString(2));
+				langInDatabase.setLanguageName(resultSet.getString(2));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -171,7 +171,7 @@ public class Repository {
 		try {
 			preparedStatement = conn.prepareStatement("INSERT INTO IDIOMAS(nombreIdioma)" +
 					"VALUES (?)");
-			preparedStatement.setString(1, lang.getlanguageName());
+			preparedStatement.setString(1, lang.getLanguageName());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -216,7 +216,7 @@ public class Repository {
 			while(resultSet.next()){
 				Language IdiomaInDatabase = new Language();
 				IdiomaInDatabase.setId(resultSet.getInt(1));
-				IdiomaInDatabase.setlanguageName(resultSet.getString(2));
+				IdiomaInDatabase.setLanguageName(resultSet.getString(2));
 				listOfLangs.add(IdiomaInDatabase);
 			}
 			
