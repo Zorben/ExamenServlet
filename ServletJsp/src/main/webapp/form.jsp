@@ -21,7 +21,7 @@
 				List<Language> listLangs = servicio.listAllLangs();
 				if(null != listLangs && !listLangs.isEmpty()){
 					for (Language lang : listLangs) {
-						out.println("<option value="+lang.getId()+">");
+						out.println("<option value="+lang.getlanguageName()+">");
 						out.println(lang.getlanguageName());
 						out.println("</option>");
 					}
