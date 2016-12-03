@@ -28,18 +28,20 @@ public class InsertServlet extends HttpServlet{
 	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		// Captura de los parametros enviados por request
 		Country countryForm = null;
 		Language languageForm;
-		
 		String name_country = utilidades.formatString(req.getParameter("countryname"));
 		String name_language_selected = req.getParameter("selectedlanguage");
 		String name_language_written = utilidades.formatString(req.getParameter("writtenlanguage"));
 		
 		
-		// Comprueba si los campos están correctamente rellenados y redirecciona si no es el caso
+		// Comprobación de errores en los campos introducidos por el request
 		checkErrors(name_country,name_language_selected,name_language_written, req, resp);
 		
-		// Busqueda de campos proporcionados
+		
+		// Campos validos, consultas en base de datos
 			
 			countryForm = service.searchCountry(name_country);
 			if(countryForm.getCountryName() != null) // existe en la bd
@@ -79,15 +81,6 @@ public class InsertServlet extends HttpServlet{
 		dispatcher.forward(req,resp);
 	}
 	
-	
-	/*
-	 * PRE: 'campo' es un string que identifica el campo afectado: 'campo_pais', 'campo_idioma' o 'campo_ambos'
-	 * POST: Informa al usuario del error cometido e inserta un boton que redirige al formulario inicial
-	 */
-	public void errorRedirection(String messaje, HttpServletRequest req, HttpServletResponse resp) throws IOException{
-		PrintWriter pw = resp.getWriter();
-		pw.println("<br><br><a>" + messaje + "</a> &nbsp&nbsp&nbsp <input type='button' value='Volver' onclick=window.location.href='/ServletJsp'>");
-	}
 
 	public Service getService() {
 		return service;
@@ -119,6 +112,17 @@ public class InsertServlet extends HttpServlet{
 		else if(a!="" && b=="" && c==""){
 			errorRedirection("No ha introducido ningún idioma.", req, resp);
 		}
+	}
+	
+	
+	/*
+	 * PRE: 'messaje' es un mensaje que describe el error del usuario al enviar su formulario
+	 * POST: Informa al usuario del error cometido e inserta un boton que redirige al formulario inicial
+	 */
+	public void errorRedirection(String messaje, HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		PrintWriter pw = resp.getWriter();
+		pw.println("<br><br><a>" + messaje + "</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+				+ "<input type='button' value='Volver' onclick=window.location.href='/ServletJsp'>");
 	}
 	
 	
