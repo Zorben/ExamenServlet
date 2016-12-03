@@ -11,7 +11,7 @@ public class Utilities {
 		 *  POST: devuelve original sin espacios, con la primera letra en mayusculas y el resto en minusculas
 		 */
 			
-			public String formatString(String original){
+			public static String formatString(String original){
 				
 				if (original != null && !original.isEmpty()){
 					return original.trim().substring(0,1).toUpperCase() + original.substring(1).toLowerCase();
@@ -29,7 +29,7 @@ public class Utilities {
 				String cadena="";
 				if (list != null || !list.isEmpty()){
 					for (Country country : list) {
-						cadena += country.getcountryName()+", ";
+						cadena += country.getCountryName()+", ";
 					}
 					/* quita la coma y espacio final */
 					cadena += ".";

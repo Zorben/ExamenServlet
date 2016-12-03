@@ -60,6 +60,6 @@ public class Service {
 	}
 	
 	public static List<Country> searchCountriesByLangName(String language) {
-		return repository.buscarPaisesPorIdioma(language);
+		return repository.searchCountryByLangString(language);
 	}
 }

@@ -38,7 +38,7 @@ public class Repository {
 				countryInDatabase = new Country();
 				langInDatabase = new Language();
 				countryInDatabase.setId(resultSet.getInt(1));
-				countryInDatabase.setcountryName(resultSet.getString(2));
+				countryInDatabase.setCountryName(resultSet.getString(2));
 				langInDatabase = searchLanguageById(resultSet.getInt(3));
 				countryInDatabase.setLanguage(langInDatabase);
 			}
@@ -149,7 +149,7 @@ public class Repository {
 		try {
 			preparedStatement = conn.prepareStatement("INSERT INTO PAISES(nombrePais,idIdioma)" +
 					"VALUES (?, ?)");
-			preparedStatement.setString(1, countryForm.getcountryName());
+			preparedStatement.setString(1, countryForm.getCountryName());
 			preparedStatement.setInt(2, countryForm.getLanguage().getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -250,7 +250,7 @@ public class Repository {
 			while(resultSet.next()){
 				Country countryInDatabase = new Country();
 				countryInDatabase.setId(resultSet.getInt(1));
-				countryInDatabase.setcountryName(resultSet.getString(2));
+				countryInDatabase.setCountryName(resultSet.getString(2));
 				countryInDatabase.setLanguage(language);
 				listOfCountries.add(countryInDatabase);
 			}
@@ -271,7 +271,7 @@ public class Repository {
 	 *	PRE: language es un string con el nombre de un idioma
 	 *	POST: Devuelve una lista de objetos de la clase Country cuyo idioma coincida con language en la bd
 	 */
-	public static List<Country> buscarPaisesPorIdioma(String language) {
+	public static List<Country> searchCountryByLangString(String language) {
 		List<Country> listOfCountries= new ArrayList<Country>();
 		Connection conn = manager.open(jdbcUrl);
 		ResultSet resultSet = null;
@@ -284,7 +284,7 @@ public class Repository {
 			while(resultSet.next()){
 				Country countryInDatabase = new Country();
 				countryInDatabase.setId(resultSet.getInt(1));
-				countryInDatabase.setcountryName(resultSet.getString(2));
+				countryInDatabase.setCountryName(resultSet.getString(2));
 				countryInDatabase.setLanguage(langInDatabase);
 				listOfCountries.add(countryInDatabase);
 			}

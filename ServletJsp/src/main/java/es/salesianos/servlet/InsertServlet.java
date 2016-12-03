@@ -37,12 +37,12 @@ public class InsertServlet extends HttpServlet{
 		
 		
 		// Comprueba si los campos están correctamente rellenados y redirecciona si no es el caso
-		check_errors(name_country,name_language_selected,name_language_written, req, resp);
+		checkErrors(name_country,name_language_selected,name_language_written, req, resp);
 		
 		// Busqueda de campos proporcionados
 			
 			countryForm = service.searchCountry(name_country);
-			if(countryForm.getcountryName() != null) // existe en la bd
+			if(countryForm.getCountryName() != null) // existe en la bd
 				errorRedirection("El pais introducido ya existe, introduzca otro", req, resp);
 			
 			else{ // no existe en la db y se puede insertar
@@ -64,7 +64,7 @@ public class InsertServlet extends HttpServlet{
 				}
 				// PAIS E IDIOMA CORRECTOS
 				countryForm = new Country();
-				countryForm.setcountryName(name_country);
+				countryForm.setCountryName(name_country);
 				countryForm.setLanguage(languageForm);
 				service.insertCountry(countryForm);
 				req.setAttribute("listAllLangs", service.listAllLangs());
@@ -97,8 +97,19 @@ public class InsertServlet extends HttpServlet{
 		this.service = service;
 	}
 	
-	// METODO QUE REDIRECCIONA EN LOS CASOS DE ERRORES DE CAMPOS VACIOS EN EL FORMULARIO
-	public void check_errors(String a, String b, String c, HttpServletRequest req, HttpServletResponse resp) throws IOException{
+	
+	/* 
+	 * PRE: a, b y c son Strings que contienen lo enviado en el formulario por el request
+	 * 		a: corresponde a lo introducido en el campo de introduccion de nombre del pais
+	 * 		b: corresponde a lo que hay seleccionado en el desplegable del idioma
+	 * 		c: corresponde a lo que hay introducido en el campo de introduccion de nombre de idioma
+	 * 
+	 * 
+	 * POS: Si no se proporcionan los datos necesarios para realizar la insercion, se informa de ello
+	 * 		redireccionando y permitiendo volver al formulario inicial
+	 * 		Si todo esta correcto, no realiza nada
+	 */
+	public void checkErrors(String a, String b, String c, HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		if(a=="" && b=="" && c==""){
 			errorRedirection("No ha introducido ningún país ni idioma.", req, resp);
 			}
