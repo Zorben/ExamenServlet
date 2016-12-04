@@ -32,7 +32,6 @@
 
 if(null != languages && !languages.isEmpty()){
 	Service service = new Service();
-	Utilities utilidades;
 	for (Language lang : languages) {
 		out.println("<tr>");
 		out.println("<td style='text-align:center'>");
@@ -42,7 +41,7 @@ if(null != languages && !languages.isEmpty()){
 		out.println(lang.getLanguageName());
 		out.println("</td>");
 		out.println("<td>");
-		out.println(utilidades.listCountriesToString(service.searchCountriesByLang(lang)));
+		out.println(Utilities.listCountriesToString(service.searchCountriesByLang(lang)));
 		out.println("</td>");
 		out.println("</tr>");
 	}	
