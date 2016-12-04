@@ -38,30 +38,32 @@ public class InsertServlet extends HttpServlet{
 		
 		
 		// Comprobación de errores en los campos introducidos por el request
-		checkErrors(name_country,name_language_selected,name_language_written, req, resp);
-		
-		
-		// Campos validos, consultas a la bd
-
-		countryForm = service.searchCountry(name_country);
-		
-		// PAIS YA EXISTE
-		if(countryForm.getCountryName() != null){
-			errorRedirection("El pais introducido ya existe, introduzca otro", req, resp);
+		if(checkErrors(name_country,name_language_selected,name_language_written, req, resp)){
+			// Campos vacios, redirecciona y no ejecuta el resto del codigo
 		}
 		
-		// PAIS NO EXISTE
-		else{
-			languageForm = checkLanguage(req, resp, name_language_selected, name_language_written);
+		else{// Campos validos, consultas a la bd
+	
+			countryForm = service.searchCountry(name_country);
 			
-			// PAIS E IDIOMA CORRECTOS, se procede a insertar el pais en la base de datos
-			countryForm.setCountryName(name_country);
-			countryForm.setLanguage(languageForm);
-			service.insertCountry(countryForm);
+			// PAIS YA EXISTE
+			if(countryForm.getCountryName() != null){
+				errorRedirection("El pais introducido ya existe, introduzca otro", req, resp);
+			}
 			
-			// atributo del request y redireccion
-			req.setAttribute("listAllLangs", service.listAllLangs());
-			redirect("/tablelist.jsp", req, resp);
+			// PAIS NO EXISTE
+			else{
+				languageForm = checkLanguage(req, resp, name_language_selected, name_language_written);
+				
+				// PAIS E IDIOMA CORRECTOS, se procede a insertar el pais en la base de datos
+				countryForm.setCountryName(name_country);
+				countryForm.setLanguage(languageForm);
+				service.insertCountry(countryForm);
+				
+				// atributo del request y redireccion
+				req.setAttribute("listAllLangs", service.listAllLangs());
+				redirect("/tablelist.jsp", req, resp);
+			}
 		}
 			
 	} // end doPost
@@ -118,21 +120,26 @@ public class InsertServlet extends HttpServlet{
 	 * 		@param b  -> corresponde a lo que hay seleccionado en el desplegable del idioma
 	 * 		@param c  -> corresponde a lo que hay introducido en el campo de introduccion de nombre de idioma
 	 * 
-	 * 
-	 * POS: Si no se proporcionan los datos necesarios para realizar la insercion, se informa de ello
+	 * 		
+	 * POS: @return true -> Si hay un error devuelve true
 	 * 		redireccionando y permitiendo volver al formulario inicial
-	 * 		Si todo esta correcto, no realiza nada
+	 * 		Si todo esta correcto, devuelve false;
 	 */
-	public void checkErrors(String a, String b, String c, HttpServletRequest req, HttpServletResponse resp) throws IOException{
+	public boolean checkErrors(String a, String b, String c, HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		if(a=="" && b=="" && c==""){
 			errorRedirection("No ha introducido ningún país ni idioma.", req, resp);
-			}
+			return true;
+		}
 		else if(a=="" && (b!="" || c!="")){
 			errorRedirection("No ha introducido ningún país.", req, resp);
+			return true;
 		}
 		else if(a!="" && b=="" && c==""){
 			errorRedirection("No ha introducido ningún idioma.", req, resp);
+			return true;
 		}
+		else // no hay errores
+			return false; 
 	}
 	
 	
